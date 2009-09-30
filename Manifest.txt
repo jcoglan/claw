@@ -1,0 +1,7 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+bin/claw
+lib/claw.rb
+test/test_claw.rb
