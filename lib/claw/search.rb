@@ -3,6 +3,8 @@ module Claw
     
     EXCLUDED = %w[.git .svn CVS]
     
+    attr_reader :dir
+    
     def initialize(dir)
       @dir = File.expand_path(dir)
       raise "Not a directory: #{@dir}" unless File.directory?(@dir)

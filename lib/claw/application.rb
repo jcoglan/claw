@@ -44,7 +44,7 @@ module Claw
       return unless defined?(@results) and defined?(@command)
       path = @results[index.to_i - 1]
       return unless path
-      `#{ @command } #{ path }`
+      `#{ @command } #{ File.join(@search.dir, path) }`
     end
     
     def search_by_filename(*query)
