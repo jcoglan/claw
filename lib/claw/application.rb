@@ -17,6 +17,16 @@ module Claw
       results.sort
     end
     
+    def find_by_content(query)
+      `grep -rin #{@dir} -e "#{query}"`.split("\n").map { |result|
+        parts = result.split(':')
+        [parts[0].sub(@dir + '/', ''), parts[1].to_i, parts[2..-1] * ':']
+      }.sort do |a,b|
+        name, line = (a[0] <=> b[0]), (a[1] <=> b[1])
+        name.zero? ? line : name
+      end
+    end
+    
   end
 end
 

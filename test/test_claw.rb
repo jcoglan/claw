@@ -13,4 +13,9 @@ class TestClaw < Test::Unit::TestCase
     assert_equal %w[test_file.txt],   @app.find_by_name('testfile')
     assert_equal %w[Capfile],         @app.find_by_name('cap')
   end
+  
+  def test_search_by_contents
+    assert_equal [['Capfile', 2, 'def something(one, two)'], ['foo.rb', 5, '      def something']],
+                 @app.find_by_content('def something')
+  end
 end
