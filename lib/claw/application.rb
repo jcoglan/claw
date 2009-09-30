@@ -2,6 +2,7 @@ module Claw
   class Application
     
     PROMPT = '> '
+    SPACE  = ' '
     
     COMMANDS = {
       "f" => :search_by_filename,
@@ -46,13 +47,13 @@ module Claw
       `#{ @command } #{ path }`
     end
     
-    def search_by_filename(query)
-      @results = @search.by_name(query)
+    def search_by_filename(*query)
+      @results = @search.by_name(query * SPACE)
       print_results
     end
     
-    def search_by_content(query)
-      @results = @search.by_content(query).map { |r| r.first }.uniq
+    def search_by_content(*query)
+      @results = @search.by_content(query * SPACE).map { |r| r.first }.uniq
       print_results
     end
     
