@@ -5,6 +5,7 @@ Rakefile
 bin/claw
 lib/claw.rb
 lib/claw/application.rb
+lib/claw/search.rb
 test/assets/Capfile
 test/assets/foo.rb
 test/assets/test_file.txt
