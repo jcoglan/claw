@@ -26,12 +26,14 @@ module Claw
       args = command.strip.split(/\s+/)
       return if dispatch_command(args.first, args[1..-1])
       open(args[0])
+    rescue Claw::Error => e
+      puts "Error: #{e.message}"
     end
     
     def dispatch_command(command, args)
       return false unless command =~ /^:/
       method = COMMANDS[command.sub(':', '')]
-      raise "Unknown command #{command}" unless method
+      raise Claw::Error.new("Unknown command #{command}") unless method
       __send__(method, *args)
       true
     end
