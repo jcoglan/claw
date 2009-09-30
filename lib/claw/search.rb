@@ -12,7 +12,7 @@ module Claw
       Find.find(@dir) do |path|
         next unless File.file?(path)
         path = path.sub(@dir + '/', '')
-        results << path if path =~ pattern
+        results << path if File.basename(path) =~ pattern
       end
       results.sort
     end

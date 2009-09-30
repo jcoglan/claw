@@ -1,4 +1,5 @@
 require 'find'
+require 'readline'
 
 module Claw
   VERSION = '0.1.0'

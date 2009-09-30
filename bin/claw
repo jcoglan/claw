@@ -1,3 +1,21 @@
 #!/usr/bin/env ruby
 
-abort "you need to write me"
+require 'rubygems'
+require 'oyster'
+require File.join(File.dirname(__FILE__), '..', 'lib', 'claw')
+
+spec = Oyster.spec do
+  name "claw -- search and open files"
+  author "James Coglan <jcoglan@googlemail.com>"
+  synopsis "claw DIRECTORY -c EDITOR"
+  
+  string :command, :desc => "Command used to open files"
+end
+
+begin; options = spec.parse
+rescue Oyster::HelpRendered; exit
+end
+
+dir = options[:unclaimed].first || '.'
+Claw::Application.new(dir, options).run!
+
