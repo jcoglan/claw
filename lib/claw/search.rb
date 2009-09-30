@@ -1,6 +1,8 @@
 module Claw
   class Search
     
+    EXCLUDED = %w[.git .svn CVS]
+    
     def initialize(dir)
       @dir = File.expand_path(dir)
       raise "Not a directory: #{@dir}" unless File.directory?(@dir)
@@ -10,6 +12,7 @@ module Claw
       results = []
       pattern = %r{#{ query.strip.split('').map(&Regexp.method(:escape)) * '.*' }}i
       Find.find(@dir) do |path|
+        Find.prune if File.directory?(path) and EXCLUDED.include?(File.basename(path))
         next unless File.file?(path)
         path = path.sub(@dir + '/', '')
         results << path if File.basename(path) =~ pattern
@@ -18,10 +21,16 @@ module Claw
     end
     
     def by_content(query)
-      `grep -rin #{@dir} -e "#{query}"`.split("\n").map { |result|
+      results = []
+      `grep -rin #{@dir} -e "#{query}"`.split("\n").each do |result|
         parts = result.split(':')
-        [parts[0].sub(@dir + '/', ''), parts[1].to_i, parts[2..-1] * ':']
-      }.sort do |a,b|
+        path  = parts[0].sub(@dir + '/', '')
+        next if path.split('/').any? { |p| EXCLUDED.include?(p) }
+        line  = parts[1].to_i
+        results << [path, line, parts[2..-1] * ':']
+      end
+      
+      results.sort do |a,b|
         name, line = (a[0] <=> b[0]), (a[1] <=> b[1])
         name.zero? ? line : name
       end
