@@ -29,7 +29,7 @@ module Claw
         path  = parts[0].sub(@dir + '/', '')
         next if path.split('/').any? { |p| EXCLUDED.include?(p) }
         line  = parts[1].to_i
-        results << [path, line, parts[2..-1] * ':']
+        results << [path, line, (parts[2..-1] || []) * ':']
       end
       
       results.sort do |a,b|
