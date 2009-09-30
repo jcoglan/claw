@@ -1,5 +1,5 @@
 require "test/unit"
-require "claw"
+require "lib/claw"
 
 ASSET_DIR = File.join(File.dirname(__FILE__), 'assets')
 
