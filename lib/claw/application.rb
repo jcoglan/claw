@@ -17,11 +17,9 @@ module Claw
       @command = options[:command]
     end
     
-    def run!
-      loop { interpret(Readline.readline(PROMPT)) }
+    def prompt
+      PROMPT
     end
-    
-  private
     
     def interpret(command)
       Readline::HISTORY << command
@@ -31,6 +29,8 @@ module Claw
     rescue Claw::Error => e
       puts "Error: #{e.message}"
     end
+    
+  private
     
     def dispatch_command(command, args)
       return false unless command =~ /^:/

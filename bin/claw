@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'readline'
 require 'rubygems'
 require 'oyster'
 require File.join(File.dirname(__FILE__), '..', 'lib', 'claw')
@@ -53,5 +54,6 @@ rescue Oyster::HelpRendered; exit
 end
 
 dir = options[:unclaimed].first || '.'
-Claw::Application.new(dir, options).run!
+app = Claw::Application.new(dir, options)
+loop { app.interpret(Readline.readline(app.prompt)) }
 
