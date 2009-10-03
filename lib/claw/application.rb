@@ -8,11 +8,13 @@ module Claw
       "f" => :search_by_filename,
       "t" => :search_by_content,
       "q" => :quit,
-      "c" => :set_command
+      "c" => :command=,
+      "d" => :directory=
     }
     
     def initialize(dir, options = {})
-      @search = Search.new(dir)
+      @dir     = File.expand_path(dir)
+      @search  = Search.new(@dir)
       @options = options
       @command = options[:command]
     end
@@ -49,8 +51,13 @@ module Claw
       puts output if output and output != ''
     end
     
-    def set_command(app)
+    def command=(app)
       @command = app
+    end
+    
+    def directory=(dir)
+      dir = File.join(@dir, dir)
+      @search = Search.new(dir)
     end
     
     def search_by_filename(*query)
