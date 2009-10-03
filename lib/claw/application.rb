@@ -28,7 +28,7 @@ module Claw
       args = command.strip.split(/\s+/)
       return if dispatch_command(args.first, args[1..-1])
       open(args[0])
-    rescue Claw::Error => e
+    rescue StandardError => e
       puts "Error: #{e.message}"
     end
     

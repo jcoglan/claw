@@ -7,7 +7,7 @@ module Claw
     
     def initialize(dir)
       @dir = File.expand_path(dir)
-      raise "Not a directory: #{@dir}" unless File.directory?(@dir)
+      raise Claw::Error.new("Not a directory: #{@dir}") unless File.directory?(@dir)
     end
     
     def by_name(query)
