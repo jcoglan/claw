@@ -9,11 +9,13 @@ module Claw
       "t" => :search_by_content,
       "q" => :quit,
       "c" => :command=,
-      "d" => :directory=
+      "d" => :directory=,
+      "a" => :open_all
     }
     
     def initialize(dir, options = {})
       @dir     = File.expand_path(dir)
+      @results = []
       @search  = Search.new(@dir)
       @options = options
       @command = options[:command]
@@ -44,11 +46,15 @@ module Claw
     
     def open(index)
       return unless Numeric === index or index =~ /^\d+$/
-      return unless defined?(@results) and defined?(@command)
+      return unless defined?(@command)
       path = @results[index.to_i - 1]
       return unless path
       output = `#{ @command } #{ File.join(@search.dir, path) }`
       puts output if output and output != ''
+    end
+    
+    def open_all
+      (1..@results.size).each(&method(:open))
     end
     
     def command=(app)
