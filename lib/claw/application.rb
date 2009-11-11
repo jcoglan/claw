@@ -13,8 +13,9 @@ module Claw
       "a" => :open_all
     }
     
-    def initialize(dir, options = {})
-      @dir     = File.expand_path(dir)
+    def initialize(options, io)
+      @dir     = File.expand_path(options[:unclaimed].first || '.')
+      @io      = io
       @results = []
       @search  = Search.new(@dir)
       @options = options
@@ -31,7 +32,7 @@ module Claw
       return if dispatch_command(args.first, args[1..-1])
       open(args[0])
     rescue StandardError => e
-      puts "Error: #{e.message}"
+      @io.puts "Error: #{e.message}"
     end
     
   private
@@ -50,7 +51,7 @@ module Claw
       path = @results[index.to_i - 1]
       return unless path
       output = `#{ @command } #{ File.join(@search.dir, path) }`
-      puts output if output and output != ''
+      @io.puts output if output and output != ''
     end
     
     def open_all
@@ -81,11 +82,11 @@ module Claw
     end
     
     def print_results
-      puts ""
+      @io.puts ""
       @results.each_with_index do |result, i|
-        puts sprintf('% 4d', i+1) + ': ' + result
+        @io.puts sprintf('% 4d', i+1) + ': ' + result
       end
-      puts ""
+      @io.puts ""
     end
     
   end
