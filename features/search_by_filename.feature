@@ -23,4 +23,12 @@ Feature: Search by filename
     """
        1: test_file.txt
     """
+  
+  Scenario: Files appear listed alphabetically
+    Given I enter ":f file"
+    Then I should see
+    """
+       1: Capfile
+       2: test_file.txt
+    """
 

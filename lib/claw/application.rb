@@ -50,7 +50,7 @@ module Claw
       return unless defined?(@command)
       path = @results[index.to_i - 1]
       return unless path
-      output = `#{ @command } #{ File.join(@search.dir, path) }`
+      output = `#{ @command } #{ path }`
       @io.puts output if output and output != ''
     end
     
@@ -84,7 +84,7 @@ module Claw
     def print_results
       @io.puts ""
       @results.each_with_index do |result, i|
-        @io.puts sprintf('% 4d', i+1) + ': ' + result
+        @io.puts sprintf('% 4d', i+1) + ': ' + result.gsub(@search.dir + '/', '')
       end
       @io.puts ""
     end

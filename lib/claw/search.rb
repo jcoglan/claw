@@ -16,7 +16,6 @@ module Claw
       Find.find(@dir) do |path|
         Find.prune if File.directory?(path) and EXCLUDED.include?(File.basename(path))
         next unless File.file?(path)
-        path = path.sub(@dir + '/', '')
         results << path if File.basename(path) =~ pattern
       end
       results.sort
@@ -26,7 +25,7 @@ module Claw
       results = []
       `grep -rin #{@dir} -e "#{query}"`.split("\n").each do |result|
         parts = result.split(':')
-        path  = parts[0].sub(@dir + '/', '')
+        path  = parts[0]
         next if path.split('/').any? { |p| EXCLUDED.include?(p) }
         line  = parts[1].to_i
         results << [path, line, (parts[2..-1] || []) * ':']
