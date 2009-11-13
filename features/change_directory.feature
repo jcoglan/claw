@@ -14,12 +14,12 @@ Feature: Change directories
        4: search_by_filename.feature
     """
     When I enter "2"
-    Then features/open_files.feature should be open in gedit
+    Then "features/open_files.feature" should be open in "gedit"
   
   Scenario: The correct file is opened after changing directories
     Given I enter ":d ../features"
     And I enter ":f feature"
     And I enter ":d ../bin"
     And I enter "3"
-    Then features/search_by_content.feature should be open in gedit
+    Then "features/search_by_content.feature" should be open in "gedit"
 

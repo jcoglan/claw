@@ -16,7 +16,7 @@ Then /^I should see$/ do |string|
   @io.read.gsub(/^\n*/, '').gsub(/\n*$/, '').should == string
 end
 
-Then /^(\S+) should be open in (\S+)$/ do |file, program|
+Then /^"([^\"]*)" should be open in "([^\"]*)"$/ do |file, program|
   @commands.include?("#{program} #{File.expand_path file}").should be_true
 end
 
