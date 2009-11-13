@@ -5,11 +5,14 @@ Rakefile
 bin/claw
 lib/claw.rb
 lib/claw/application.rb
+lib/claw/bin_spec.rb
 lib/claw/search.rb
 features/step_definitions/claw_steps.rb
 features/support/assets/Capfile
 features/support/assets/foo.rb
 features/support/assets/test_file.txt
 features/support/env.rb
+features/change_directory.feature
+features/open_files.feature
 features/search_by_content.feature
 features/search_by_filename.feature
